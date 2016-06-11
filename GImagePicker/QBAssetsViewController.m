@@ -260,8 +260,20 @@ static CGSize CGSizeScale(CGSize size, CGFloat scale) {
         if (self.isShow == false)
         {
             NSString* message = [maxsize_string stringByAppendingString:@" を超えているファイルがあります\nファイルサイズが上限を超えているので選択できません"];
+            
+            UIAlertController *alertController =
+            [UIAlertController alertControllerWithTitle:@"UIAlertControllerStyle.Alert"
+                                                message:message
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            }]];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"いいえ" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+
+            /* 廃止
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"はい", nil];
-            [alert show];
+            [alert show];*/
             self.isShow = true;
         }
     }

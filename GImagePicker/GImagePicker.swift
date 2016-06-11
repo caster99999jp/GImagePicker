@@ -15,7 +15,7 @@ public class GImagePicker: NSObject, QBImagePickerControllerDelegate
     var onComplated: ((AnyObject)->())?
     var onCanceled: (()->())?
     
-    
+    var maximumNumberOfSelection:Int = 10
     /*
     override init()
     {
@@ -26,12 +26,13 @@ public class GImagePicker: NSObject, QBImagePickerControllerDelegate
     */
     
     
-    public func pickImage(parentViewController: UIViewController, complated:(AnyObject)->(), canceled:()->())
+    public func pickImage(parentViewController: UIViewController,
+                          complated:(AnyObject)->(), canceled:()->())
     {
         q = QBImagePickerController()
         q.delegate = self
         q.allowsMultipleSelection = true
-        q.maximumNumberOfSelection = 10
+        q.maximumNumberOfSelection = UInt(self.maximumNumberOfSelection)
         q.showsNumberOfSelectedAssets = true
         
         // デリゲート設定
@@ -46,8 +47,7 @@ public class GImagePicker: NSObject, QBImagePickerControllerDelegate
     // キャンセルボタンを押した //
     @objc public func qb_imagePickerControllerDidCancel(imagePickerController: QBImagePickerController)
     {
-        q.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+        q.dismissViewControllerAnimated(true, completion: nil)
         
         if( self.onCanceled != nil ) {
             self.onCanceled!()
@@ -55,10 +55,10 @@ public class GImagePicker: NSObject, QBImagePickerControllerDelegate
     }
     
     // OKボタンを押した
-    @objc public func qb_imagePickerController(imagePickerController: QBImagePickerController,didFinishPickingAssets assets: [AnyObject])
+    @objc public func qb_imagePickerController(imagePickerController: QBImagePickerController,
+                                               didFinishPickingAssets assets: [AnyObject])
     {
-        q.dismissViewControllerAnimated(true, completion: { () -> Void in
-        })
+        q.dismissViewControllerAnimated(true, completion: nil)
         
         if( self.onComplated != nil ) {
             self.onComplated!(assets)
